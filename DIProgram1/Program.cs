@@ -1,0 +1,11 @@
+using Microsoft.AspNetCore;
+using DIProgram1;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        BuildWebHost(args).Run();
+    }
+    public static IWebHost BuildWebHost(string[] args) => WebHost.CreateDefaultBuilder(args).UseStartup<Startup>().Build();
+}
