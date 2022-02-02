@@ -1,9 +1,11 @@
-﻿using Dapper;
-using DIProgram1.Models;
+﻿using DIProgram1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
-using System.Data.SqlClient;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
+using Dapper;
+using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace DIProgram1.Controllers
 {
@@ -43,11 +45,16 @@ namespace DIProgram1.Controllers
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
         private List<User> GetUsers()
         {
             using (IDbConnection db = Connection)
             {
-                var result = db.Query<User>("SELECT * FROM User").ToList();
+                var result = db.Query<User>("SELECT * FROM [User]").ToList();
 
                 return result;
             }
