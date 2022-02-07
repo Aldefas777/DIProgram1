@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Dapper;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using DIProgram1;
 
 namespace DIProgram1.Controllers
 {
@@ -27,8 +28,11 @@ namespace DIProgram1.Controllers
             get
             {
                 return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+
+                
             }
         }
+
 
         // GET: HomeController
         public IActionResult Index()
@@ -38,9 +42,11 @@ namespace DIProgram1.Controllers
             return View(model);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy(string Names)
         {
-            return View();
+            var model = AddUsers(Names);
+
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -58,6 +64,30 @@ namespace DIProgram1.Controllers
 
                 return result;
             }
+        }
+
+        [HttpPost]
+        private ActionResult AddUsers(string names)
+        {
+            using(SqlConnection db = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                db.Open();
+                SqlCommand insertCommand = new SqlCommand();
+                insertCommand.Connection = db;
+
+                insertCommand.CommandText = "INSERT INTO [User] VALUES (@User);";
+                
+                if (String.IsNullOrEmpty(names))
+                {
+                    insertCommand.Parameters.AddWithValue("@User", DBNull.Value);
+                }
+                else
+                    insertCommand.Parameters.AddWithValue("@User", names);
+                insertCommand.ExecuteReader();
+                db.Close();
+            }
+            return View();
+            
         }
 
         public class User
