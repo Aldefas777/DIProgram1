@@ -75,15 +75,15 @@ namespace DIProgram1.Controllers
                 SqlCommand insertCommand = new SqlCommand();
                 insertCommand.Connection = db;
 
-                insertCommand.CommandText = "INSERT INTO [User] VALUES (@User);";
                 
-                if (String.IsNullOrEmpty(names))
+                if(names != null)
                 {
-                    insertCommand.Parameters.AddWithValue("@User", DBNull.Value);
-                }
-                else
+                    insertCommand.CommandText = "INSERT INTO [User] VALUES (@User);";
                     insertCommand.Parameters.AddWithValue("@User", names);
-                insertCommand.ExecuteReader();
+                    insertCommand.ExecuteReader();
+                }
+               
+                
                 db.Close();
             }
             return View();
