@@ -49,6 +49,20 @@ namespace DIProgram1.Controllers
             return View(model);
         }
 
+        public IActionResult Update(string names, string id)
+        {
+            var model = UpdateUser(names, id);
+
+            return View(model);
+        }
+
+        public IActionResult Delete(string id)
+        {
+            var model = DeleteUser(id);
+
+            return View(model);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
         public IActionResult Error()
@@ -87,7 +101,53 @@ namespace DIProgram1.Controllers
                 db.Close();
             }
             return View();
-            
+        }
+
+        [HttpPost]
+        private ActionResult UpdateUser(string names, string id)
+        {
+            using (SqlConnection db = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                db.Open();
+                SqlCommand insertCommand = new SqlCommand();
+                insertCommand.Connection = db;
+
+
+                if (names != null)
+                {
+                    insertCommand.CommandText = "UPDATE [User] SET Name = (@User) WHERE id = (@Id)";
+                    insertCommand.Parameters.AddWithValue("@Id", Convert.ToInt32(id));
+                    insertCommand.Parameters.AddWithValue("@User", names);
+                    insertCommand.ExecuteReader();
+                }
+
+
+                db.Close();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        private ActionResult DeleteUser(string id)
+        {
+            using (SqlConnection db = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                db.Open();
+                SqlCommand insertCommand = new SqlCommand();
+                insertCommand.Connection = db;
+
+
+                if (id != null)
+                {
+                    insertCommand.CommandText = "DELETE FROM [User] WHERE id = (@Id)";
+                    insertCommand.Parameters.AddWithValue("@Id", Convert.ToInt32(id));;
+                    insertCommand.ExecuteReader();
+                }
+
+
+                db.Close();
+            }
+            return View();
         }
 
         public class User
