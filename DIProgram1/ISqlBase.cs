@@ -13,7 +13,7 @@ namespace DIProgram1
     {
        List<User> GetUsers();
         void AddUsers(string names);
-        void UpdateUser(string names, string id);
+        void UpdateUser(string names, int? id);
         void DeleteUser(int? id);
     }
 }

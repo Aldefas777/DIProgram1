@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Update";
+}
+<form method="post">
+    <div>
+       <input type="hidden" value="@ViewBag.Id" name="UserID" />
+       <input name="Names" value="@ViewBag.Name" />
+       <input type="submit" value="Insert" class="submit" />
+    </div>
+</form>

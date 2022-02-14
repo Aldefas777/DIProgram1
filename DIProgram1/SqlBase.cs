@@ -68,6 +68,7 @@ namespace DIProgram1
             }
         }
 
+        [HttpGet]
         public List<User> GetUsers()
         {
             using (var db = GetConnection())
@@ -77,8 +78,8 @@ namespace DIProgram1
                 return result;
             }
         }
-        [HttpPost]
-        public void UpdateUser(string names, string id)
+        [HttpPut("{Id}")]
+        public void UpdateUser(string names, int? id)
         {
             using (var db = GetConnection())
             {
@@ -90,7 +91,7 @@ namespace DIProgram1
                 if (names != null)
                 {
                     insertCommand.CommandText = "UPDATE [User] SET Name = (@User) WHERE id = (@Id)";
-                    insertCommand.Parameters.AddWithValue("@Id", Convert.ToInt32(id));
+                    insertCommand.Parameters.AddWithValue("@Id", id);
                     insertCommand.Parameters.AddWithValue("@User", names);
                     insertCommand.ExecuteReader();
                 }

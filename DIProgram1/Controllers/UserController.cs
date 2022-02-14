@@ -10,11 +10,11 @@ using DIProgram1;
 
 namespace DIProgram1.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         private readonly IConfiguration _config;
 
-        public HomeController(IConfiguration config)
+        public UserController(IConfiguration config)
         {
 
             _config = config;
@@ -24,14 +24,27 @@ namespace DIProgram1.Controllers
         ISqlBase sqlBase = new SqlBase();
 
 
-        // GET: HomeController
-        public IActionResult Index()
+        public IActionResult Delete(int? id)
         {
-            var model = GetUsers();
+            ViewBag.Id = id;
+            sqlBase.DeleteUser(id);
+            return View();
+        }
 
+
+        public IActionResult Add(string Names)
+        {
+            var model = AddUsers(Names);
             return View(model);
         }
 
+        public IActionResult Update(int? id, string names)
+        {
+            ViewBag.Id = id;
+            ViewBag.Name = names;
+            sqlBase.UpdateUser(names, id);
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
@@ -40,11 +53,11 @@ namespace DIProgram1.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private List<User> GetUsers()
+        [HttpPost]
+        private ActionResult AddUsers(string names)
         {
-            var result = sqlBase.GetUsers();
-            return result;
+            sqlBase.AddUsers(names);
+            return View();
         }
-
     }
 }

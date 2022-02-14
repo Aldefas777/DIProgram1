@@ -8,13 +8,16 @@
 </div>
 
 <div>
+    <a href="/User/Add">Добавить пользователя</a>
     @foreach(var item in @Model)
     {
         <div>
             <br />
             id: @item.id
             <p>Name: @item.Name</p> 
-            <a href="/Home/Delete/@item.id">Удалить</a>
+            <a href="/User/Delete/@item.id">Удалить</a>
+            <a href="/User/Update/@item.id">Редактировать</a>
         </div>
     }
+    
 </div>
