@@ -20,9 +20,9 @@ namespace DIProgram1.Controllers
             _config = config;
         }
 
- 
-        ISqlBase sqlBase = new SqlBase(); 
-        
+
+        ISqlBase sqlBase = new SqlBase();
+
 
         // GET: HomeController
         public IActionResult Index()
@@ -31,6 +31,15 @@ namespace DIProgram1.Controllers
 
             return View(model);
         }
+
+
+        public IActionResult Delete(int? id)
+        {
+            ViewBag.Id = id;
+            sqlBase.DeleteUser(id);
+            return View();
+        }
+
 
         public IActionResult Privacy(string Names)
         {
@@ -42,13 +51,6 @@ namespace DIProgram1.Controllers
         public IActionResult Update(string names, string id)
         {
             var model = UpdateUser(names, id);
-
-            return View(model);
-        }
-
-        public IActionResult Delete(string id)
-        {
-            var model = DeleteUser(id);
 
             return View(model);
         }
@@ -80,11 +82,5 @@ namespace DIProgram1.Controllers
             return View();
         }
 
-        [HttpPost]
-        private ActionResult DeleteUser(string id)
-        {
-            sqlBase.DeleteUser(id);
-            return View();
-        }
     }
 }

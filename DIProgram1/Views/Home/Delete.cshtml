@@ -2,7 +2,7 @@
     ViewData["Title"] = "Delete";
 }
 <form method="post">
-    <label>ID:</label>
-    <input name="Id" type="text" size="50" value="Id" />
-    <input type="submit" value="Delete" class="submit" />
+    <label>Форма удаления</label>
+    <input type="hidden" value="@ViewBag.Id" name="UserId"/>
+    <input href="/Home/Index" type="submit" value="Delete" class="submit" />
 </form>

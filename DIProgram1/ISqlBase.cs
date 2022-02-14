@@ -14,6 +14,6 @@ namespace DIProgram1
        List<User> GetUsers();
         void AddUsers(string names);
         void UpdateUser(string names, string id);
-        void DeleteUser(string id);
+        void DeleteUser(int? id);
     }
 }

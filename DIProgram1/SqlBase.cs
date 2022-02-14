@@ -47,8 +47,8 @@ namespace DIProgram1
         }
 
 
-        [HttpPost]
-        public void DeleteUser(string id)
+        [HttpDelete("{Id}")]
+        public void DeleteUser(int? id)
         {
             using (var db = GetConnection())
             {
@@ -56,11 +56,10 @@ namespace DIProgram1
                 SqlCommand insertCommand = new SqlCommand();
                 insertCommand.Connection = db;
 
-
                 if (id != null)
                 {
                     insertCommand.CommandText = "DELETE FROM [User] WHERE id = (@Id)";
-                    insertCommand.Parameters.AddWithValue("@Id", Convert.ToInt32(id)); ;
+                    insertCommand.Parameters.AddWithValue("@Id", id); ;
                     insertCommand.ExecuteReader();
                 }
 
