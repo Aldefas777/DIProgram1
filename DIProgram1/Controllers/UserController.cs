@@ -13,6 +13,7 @@ namespace DIProgram1.Controllers
     public class UserController : Controller
     {
         private readonly IConfiguration _config;
+        IUserRepository userRepository = new SqlBase();
 
         public UserController(IConfiguration config)
         {
@@ -20,12 +21,9 @@ namespace DIProgram1.Controllers
             _config = config;
         }
 
-
-        ISqlBase sqlBase = new SqlBase();
-
         public IActionResult GetUser()
         {
-            var model = sqlBase.GetUsers();
+            var model = GetUsers();
 
             return View(model);
         }
@@ -33,7 +31,7 @@ namespace DIProgram1.Controllers
         public IActionResult Delete(int? id)
         {
             ViewBag.Id = id;
-            sqlBase.DeleteUser(id);
+            userRepository.DeleteUser(id);
             return View();
         }
 
@@ -48,7 +46,7 @@ namespace DIProgram1.Controllers
         {
             ViewBag.Id = id;
             ViewBag.Name = names;
-            sqlBase.UpdateUser(names, id);
+            userRepository.UpdateUser(names, id);
             return View();
         }
 
@@ -62,14 +60,14 @@ namespace DIProgram1.Controllers
         [HttpPost]
         private ActionResult AddUsers(string names)
         {
-            sqlBase.AddUsers(names);
+            userRepository.AddUsers(names);
             return View();
         }
 
         private List<User> GetUsers()
         {
-            var result = sqlBase.GetUsers();
-            return result;
+
+            return userRepository.GetUsers();
         }
     }
 }

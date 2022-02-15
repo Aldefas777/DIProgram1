@@ -11,7 +11,7 @@ using DIProgram1;
 
 namespace DIProgram1
 {
-    public class SqlBase : ISqlBase
+    public class SqlBase : IUserRepository
     {
         public SqlConnection GetConnection()
         {
@@ -98,6 +98,22 @@ namespace DIProgram1
 
 
                 db.Close();
+            }
+        }
+
+        public void GetUserById(int? id)
+        {
+            using (var db = GetConnection())
+            {
+                db.Open();
+                SqlCommand insertCommand = new SqlCommand();
+                insertCommand.Connection = db;
+                if (id != null)
+                {
+                    insertCommand.CommandText = "SELECT * FROM [User] WHERE id = (@Id)";
+                    insertCommand.Parameters.AddWithValue("@Id", id);
+                    insertCommand.ExecuteReader();
+                }
             }
         }
     }
