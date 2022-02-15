@@ -23,6 +23,12 @@ namespace DIProgram1.Controllers
 
         ISqlBase sqlBase = new SqlBase();
 
+        public IActionResult GetUser()
+        {
+            var model = sqlBase.GetUsers();
+
+            return View(model);
+        }
 
         public IActionResult Delete(int? id)
         {
@@ -58,6 +64,12 @@ namespace DIProgram1.Controllers
         {
             sqlBase.AddUsers(names);
             return View();
+        }
+
+        private List<User> GetUsers()
+        {
+            var result = sqlBase.GetUsers();
+            return result;
         }
     }
 }
