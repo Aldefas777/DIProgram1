@@ -13,11 +13,12 @@ namespace DIProgram1.Controllers
     public class UserController : Controller
     {
         private readonly IConfiguration _config;
-        IUserRepository userRepository = new UserRepository();
+        public IUserRepository _userRepository;
 
-        public UserController(IConfiguration config)
+        public UserController(IConfiguration config, IUserRepository userRepository)
         {
 
+            _userRepository = userRepository;
             _config = config;
         }
 
@@ -59,7 +60,7 @@ namespace DIProgram1.Controllers
         [HttpPost]
         private ActionResult AddUsers(string names)
         {
-            userRepository.AddUsers(names);
+            _userRepository.AddUsers(names);
             return View();
         }
 
@@ -67,20 +68,20 @@ namespace DIProgram1.Controllers
         private List<User> GetUsers()
         {
 
-            return userRepository.GetUsers();
+            return _userRepository.GetUsers();
         }
 
         [HttpDelete("{id}")]
         private ActionResult DeleteUser(int? id)
         {
-            userRepository.DeleteUser(id);
+            _userRepository.DeleteUser(id);
             return View();
         }
 
         [HttpPut("{id}")]
         private ActionResult UpdateUser(int? id, string names)
         {
-            userRepository.UpdateUser(names, id);
+            _userRepository.UpdateUser(names, id);
             return View();
         }
     }
