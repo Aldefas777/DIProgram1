@@ -13,7 +13,7 @@ namespace DIProgram1.Controllers
     public class UserController : Controller
     {
         private readonly IConfiguration _config;
-        IUserRepository userRepository = new SqlBase();
+        IUserRepository userRepository = new UserRepository();
 
         public UserController(IConfiguration config)
         {
