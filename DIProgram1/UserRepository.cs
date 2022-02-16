@@ -47,7 +47,6 @@ namespace DIProgram1
             Update(names, id);
         }
 
-        [HttpPost]
         public void Add(string names)
         {
 
@@ -70,8 +69,6 @@ namespace DIProgram1
             }
         }
 
-
-        [HttpDelete("{Id}")]
         public void Delete(int? id)
         {
             using (var db = GetConnection())
@@ -92,7 +89,6 @@ namespace DIProgram1
             }
         }
 
-        [HttpGet]
         public List<User> Get()
         {
             using (var db = GetConnection())
@@ -102,7 +98,7 @@ namespace DIProgram1
                 return result;
             }
         }
-        [HttpPut("{Id}")]
+
         public void Update(string names, int? id)
         {
             using (var db = GetConnection())

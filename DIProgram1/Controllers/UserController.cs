@@ -31,10 +31,9 @@ namespace DIProgram1.Controllers
         public IActionResult Delete(int? id)
         {
             ViewBag.Id = id;
-            userRepository.DeleteUser(id);
-            return View();
+            var model = DeleteUser(id);
+            return View(model);
         }
-
 
         public IActionResult Add(string Names)
         {
@@ -46,8 +45,8 @@ namespace DIProgram1.Controllers
         {
             ViewBag.Id = id;
             ViewBag.Name = names;
-            userRepository.UpdateUser(names, id);
-            return View();
+            var model = UpdateUser(id, names);
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -64,10 +63,25 @@ namespace DIProgram1.Controllers
             return View();
         }
 
+        [HttpGet]
         private List<User> GetUsers()
         {
 
             return userRepository.GetUsers();
+        }
+
+        [HttpDelete("{id}")]
+        private ActionResult DeleteUser(int? id)
+        {
+            userRepository.DeleteUser(id);
+            return View();
+        }
+
+        [HttpPut("{id}")]
+        private ActionResult UpdateUser(int? id, string names)
+        {
+            userRepository.UpdateUser(names, id);
+            return View();
         }
     }
 }
