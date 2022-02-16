@@ -22,9 +22,10 @@ namespace DIProgram1.Controllers
             _config = config;
         }
 
+        [HttpGet]
         public IActionResult GetUser()
         {
-            var model = GetUsers();
+            var model = _userRepository.GetUsers();
 
             return View(model);
         }
@@ -51,7 +52,6 @@ namespace DIProgram1.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
@@ -62,13 +62,6 @@ namespace DIProgram1.Controllers
         {
             _userRepository.AddUsers(names);
             return View();
-        }
-
-        [HttpGet]
-        private List<User> GetUsers()
-        {
-
-            return _userRepository.GetUsers();
         }
 
         [HttpDelete("{id}")]
