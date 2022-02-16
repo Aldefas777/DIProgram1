@@ -24,32 +24,6 @@ namespace DIProgram1
         }
         public void AddUsers(string names)
         {
-            Add(names);
-        }
-
-        public void DeleteUser(int? id)
-        {
-            Delete(id);
-        }
-
-        public void GetUserById(int? id)
-        {
-            UserById(id);
-        }
-
-        public List<User> GetUsers()
-        {
-            return Get();
-        }
-
-        public void UpdateUser(string names, int? id)
-        {
-            Update(names, id);
-        }
-
-        public void Add(string names)
-        {
-
             using (var db = GetConnection())
             {
                 db.Open();
@@ -69,7 +43,7 @@ namespace DIProgram1
             }
         }
 
-        public void Delete(int? id)
+        public void DeleteUser(int? id)
         {
             using (var db = GetConnection())
             {
@@ -89,7 +63,23 @@ namespace DIProgram1
             }
         }
 
-        public List<User> Get()
+        public void GetUserById(int? id)
+        {
+            using (var db = GetConnection())
+            {
+                db.Open();
+                SqlCommand insertCommand = new SqlCommand();
+                insertCommand.Connection = db;
+                if (id != null)
+                {
+                    insertCommand.CommandText = "SELECT * FROM [User] WHERE id = (@Id)";
+                    insertCommand.Parameters.AddWithValue("@Id", id);
+                    insertCommand.ExecuteReader();
+                }
+            }
+        }
+
+        public List<User> GetUsers()
         {
             using (var db = GetConnection())
             {
@@ -99,7 +89,7 @@ namespace DIProgram1
             }
         }
 
-        public void Update(string names, int? id)
+        public void UpdateUser(string names, int? id)
         {
             using (var db = GetConnection())
             {
@@ -118,22 +108,6 @@ namespace DIProgram1
 
 
                 db.Close();
-            }
-        }
-
-        public void UserById(int? id)
-        {
-            using (var db = GetConnection())
-            {
-                db.Open();
-                SqlCommand insertCommand = new SqlCommand();
-                insertCommand.Connection = db;
-                if (id != null)
-                {
-                    insertCommand.CommandText = "SELECT * FROM [User] WHERE id = (@Id)";
-                    insertCommand.Parameters.AddWithValue("@Id", id);
-                    insertCommand.ExecuteReader();
-                }
             }
         }
     }
